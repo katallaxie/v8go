@@ -162,12 +162,12 @@ jobs:
 
     - id: pr_metadata
       run: |
-        echo ::set-output name=pr_branch::"v8_$(cat deps/v8_hash)_upgrade"
-        echo ::set-output name=pr_commit_message::"Upgrade V8 binaries for $(cat deps/v8_hash) version"
-        echo ::set-output name=pr_body::"Auto-generated pull request to upgrade V8 binary for $(cat deps/v8_hash) version"
+        echo "pr_branch=v8_$(cat deps/v8_hash)_upgrade" >> "$GITHUB_OUTPUT"
+        echo "pr_commit_message=Upgrade V8 binaries for $(cat deps/v8_hash) version" >> "$GITHUB_OUTPUT"
+        echo "pr_body=Auto-generated pull request to upgrade V8 binary for $(cat deps/v8_hash) version" >> "$GITHUB_OUTPUT"
 
     - name: Create PR
-      uses: peter-evans/create-pull-request@v3
+      uses: peter-evans/create-pull-request@v7
       with:
         commit-message: ${{steps.pr_metadata.outputs.pr_commit_message}}
         branch: ${{steps.pr_metadata.outputs.pr_branch}}
