@@ -142,8 +142,8 @@ def build_gn_args():
         # V8 itself fixed this in https://chromium-review.googlesource.com/c/v8/v8/+/3930160.
         gnargs += 'arm_control_flow_integrity="none"\n'
 
-    # disable the crel rel optimizer, which causes "fatal error: error in backend: Out of registers when reloading 'vreg%d'" on arm64 Linux with GCC 12.2.0
-    gnargs += 'crel="false"\n'
+    if args.os != "linux":
+        gnargs += 'crel="false"\n'
 
     return gnargs
 
